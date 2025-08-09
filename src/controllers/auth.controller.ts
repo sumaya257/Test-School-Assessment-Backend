@@ -37,7 +37,15 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       { expiresIn: process.env.JWT_ACCESS_EXPIRES || '15m' }
     );
 
-    res.json({ accessToken: token });
+    res.json({ 
+      accessToken: token,
+      user: {
+        id: user._id.toString(),
+        email: user.email,
+        role: user.role,
+        fullName: user.fullName || null,
+      }
+    });
   } catch (err) {
     next(err);
   }

@@ -1,8 +1,9 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export type Role = 'student' | 'admin' | 'supervisor';
 
 export interface IUser extends Document {
+  _id: Types.ObjectId;
   email: string;
   passwordHash: string;
   fullName?: string;
