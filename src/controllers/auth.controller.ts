@@ -26,6 +26,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       verificationToken,
       verified: false,
     });
+    console.log('User created:', user);
 
     await sendVerificationEmail(email, verificationToken);
 
@@ -101,13 +102,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 // Refresh access token using refresh token
 export const refreshToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { token } = req.body;
-    if (!token) return res.status(401).json({ message: 'No token provided' });
+    const { refreshToken } = req.body;
+    if (!refreshToken) return res.status(401).json({ message: 'No token provided' });
 
-    const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET || 'refreshsecret') as any;
+    const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET || 'refreshsecret') as any;
     const user = await UserModel.findById(payload.sub);
 
-    if (!user || user.refreshToken !== token)
+    if (!user || user.refreshToken !== refreshToken)
       return res.status(401).json({ message: 'Invalid token' });
 
     // @ts-ignore
@@ -126,10 +127,10 @@ export const refreshToken = async (req: Request, res: Response, next: NextFuncti
 // Logout (invalidate refresh token)
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { token } = req.body;
-    if (!token) return res.status(401).json({ message: 'No token provided' });
+    const { refreshToken  } = req.body;
+    if (!refreshToken ) return res.status(401).json({ message: 'No token provided' });
 
-    const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET || 'refreshsecret') as any;
+    const payload = jwt.verify(refreshToken , process.env.JWT_REFRESH_SECRET || 'refreshsecret') as any;
     const user = await UserModel.findById(payload.sub);
     if (!user) return res.status(401).json({ message: 'Invalid token' });
 
