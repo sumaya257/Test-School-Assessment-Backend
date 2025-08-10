@@ -313,6 +313,7 @@ async function seedQuestions() {
 
       questions.push({
         competencyCode: q.competencyCode,
+        competencyName: q.competencyName,
         level: q.level,
         stem: q.stem,
         options: newOptions,

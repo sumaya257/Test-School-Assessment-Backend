@@ -9,6 +9,10 @@ export interface IUser extends Document {
   fullName?: string;
   role: Role;
   verified: boolean;
+  verificationToken?: string;
+  refreshToken?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
   currentLevel: string;
   failedStep1: boolean;
 }
@@ -19,6 +23,10 @@ const userSchema = new Schema<IUser>({
   fullName: String,
   role: { type: String, enum: ['student', 'admin', 'supervisor'], default: 'student' },
   verified: { type: Boolean, default: false },
+  verificationToken: String,
+  refreshToken: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   currentLevel: { type: String, default: 'A1' },
   failedStep1: { type: Boolean, default: false }
 }, { timestamps: true });
