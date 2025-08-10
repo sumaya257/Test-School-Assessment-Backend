@@ -6,13 +6,13 @@ export interface IUser extends Document {
   _id: Types.ObjectId;
   email: string;
   passwordHash: string;
-  fullName?: string;
+  fullName?: string | undefined;
   role: Role;
   verified: boolean;
-  verificationToken?: string;
-  refreshToken?: string;
-  resetPasswordToken?: string;
-  resetPasswordExpires?: Date;
+  verificationToken?: string | undefined;
+  refreshToken?: string | undefined;
+  resetPasswordToken?: string | undefined;
+  resetPasswordExpires?: Date | undefined;
   currentLevel: string;
   failedStep1: boolean;
 }
